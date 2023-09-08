@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Rocket</string>
+    <string name="balance_example">BALANCE: 15.000</string>
+    <string name="balance">BALANCE: %s</string>
+    <string name="bet_example">BET: 10</string>
+    <string name="bet">BET: %d</string>
+    <string name="privacy_policy">PRIVACY POLICY</string>
+    <string name="privacy_text">Here some text of privacy policy, which you read right now.</string>
+</resources>

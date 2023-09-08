@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Rocket" parent="Theme.Material3.Dark.NoActionBar"/>
+    <style name="Theme.WebRocket" parent="Base.Theme.Rocket"/>
+    <style name="Theme.Rocket" parent="Base.Theme.Rocket">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>
