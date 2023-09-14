@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity() {
         navigation.getSupportFragmentManager = ::getSupportFragmentManager
         navigation.navigateAdd(navigation.waitingDest)
         balanceRepo.getCallback = {
-            getSharedPreferences("shared_preferences", MODE_PRIVATE).getInt("balance", 10000)
+            val tempBalance = getSharedPreferences("shared_preferences", MODE_PRIVATE).getInt("balance", 10000)
+            if(tempBalance == 0) 10_000 else tempBalance
         }
         balanceRepo.saveCallback = {
             getSharedPreferences("shared_preferences", MODE_PRIVATE).edit().putInt("balance", it).apply()
