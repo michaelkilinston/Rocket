@@ -1,14 +1,15 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "go_to.play_in.rocket"
+    namespace = "com.launchrocket.playsgame.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "go_to.play_in.rocket"
+        applicationId = "com.launchrocket.playsgame.app"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -45,9 +46,15 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     //
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    //
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    //
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     //
     implementation("org.kodein.di:kodein-di:7.19.0")
     //
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    //
+    implementation("com.onesignal:OneSignal:[5.0.0, 5.99.99]")
 }

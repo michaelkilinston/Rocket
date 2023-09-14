@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "369415415233",
+    "project_id": "play-rocket-games",
+    "storage_bucket": "play-rocket-games.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369415415233:android:c4f625ed69a83eaafd7b40",
+        "android_client_info": {
+          "package_name": "com.launchrocket.playsgame.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA999OJj-4TKCLyJrM1ttatOzZqZvwl6SE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
