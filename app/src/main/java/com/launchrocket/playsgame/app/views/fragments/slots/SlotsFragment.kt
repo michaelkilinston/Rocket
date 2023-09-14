@@ -29,6 +29,7 @@ class SlotsFragment(private val di: DI): Fragment() {
     private val navigation: MainNavigation by di.instance()
     private val balanceRepo: BalanceRepo by di.instance()
     private val balance = MutableStateFlow(0)
+    private val stoped = MutableStateFlow(false)
     private val bet = MutableStateFlow(10)
     private var autospinMode = false
 
@@ -95,94 +96,157 @@ class SlotsFragment(private val di: DI): Fragment() {
             it.isEnabled = false
             lifecycleScope.launch {
                 balance.value -= 100
+                stoped.value = false
                 var toLeft = true
                 repeat(((Random.nextDouble() * (200.0 - 120.0)) + 120.0).toInt()) {
-                    if(toLeft) {
-                        slotsVal[8] = slotsVal[4]
-                        slots[8].setImageResource(slotsVal[8])
-                        slotsVal[5] = slotsVal[1]
-                        slots[5].setImageResource(slotsVal[5])
-                        slotsVal[7] = slotsVal[3]
-                        slots[7].setImageResource(slotsVal[7])
-                        slotsVal[4] = slotsVal[0]
-                        slots[4].setImageResource(slotsVal[4])
-                        slotsVal[0] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[1] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[2] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[3] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[6] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slots[0].setImageResource(slotsVal[0])
-                        slots[1].setImageResource(slotsVal[1])
-                        slots[2].setImageResource(slotsVal[2])
-                        slots[3].setImageResource(slotsVal[3])
-                        slots[6].setImageResource(slotsVal[6])
+                    if(!stoped.value) {
+                        if (toLeft) {
+                            slotsVal[8] = slotsVal[4]
+                            slots[8].setImageResource(slotsVal[8])
+                            slotsVal[5] = slotsVal[1]
+                            slots[5].setImageResource(slotsVal[5])
+                            slotsVal[7] = slotsVal[3]
+                            slots[7].setImageResource(slotsVal[7])
+                            slotsVal[4] = slotsVal[0]
+                            slots[4].setImageResource(slotsVal[4])
+                            slotsVal[0] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[1] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[2] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[3] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[6] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slots[0].setImageResource(slotsVal[0])
+                            slots[1].setImageResource(slotsVal[1])
+                            slots[2].setImageResource(slotsVal[2])
+                            slots[3].setImageResource(slotsVal[3])
+                            slots[6].setImageResource(slotsVal[6])
+                        } else {
+                            slotsVal[2] = slotsVal[4]
+                            slots[2].setImageResource(slotsVal[2])
+                            slotsVal[5] = slotsVal[7]
+                            slots[5].setImageResource(slotsVal[5])
+                            slotsVal[1] = slotsVal[3]
+                            slots[1].setImageResource(slotsVal[1])
+                            slotsVal[4] = slotsVal[6]
+                            slots[4].setImageResource(slotsVal[4])
+                            slotsVal[0] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[3] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[6] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[7] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[8] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slots[0].setImageResource(slotsVal[0])
+                            slots[3].setImageResource(slotsVal[3])
+                            slots[6].setImageResource(slotsVal[6])
+                            slots[7].setImageResource(slotsVal[7])
+                            slots[8].setImageResource(slotsVal[8])
+                        }
+                        toLeft = !toLeft
+                        delay(25)
                     }
-                    else {
-                        slotsVal[2] = slotsVal[4]
-                        slots[2].setImageResource(slotsVal[2])
-                        slotsVal[5] = slotsVal[7]
-                        slots[5].setImageResource(slotsVal[5])
-                        slotsVal[1] = slotsVal[3]
-                        slots[1].setImageResource(slotsVal[1])
-                        slotsVal[4] = slotsVal[6]
-                        slots[4].setImageResource(slotsVal[4])
-                        slotsVal[0] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[3] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[6] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[7] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[8] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slots[0].setImageResource(slotsVal[0])
-                        slots[3].setImageResource(slotsVal[3])
-                        slots[6].setImageResource(slotsVal[6])
-                        slots[7].setImageResource(slotsVal[7])
-                        slots[8].setImageResource(slotsVal[8])
-                    }
-                    toLeft = !toLeft
-                    delay(25)
                 }
                 repeat(10) {
-                    if(toLeft) {
-                        slotsVal[8] = slotsVal[4]
-                        slots[8].setImageResource(slotsVal[8])
-                        slotsVal[5] = slotsVal[1]
-                        slots[5].setImageResource(slotsVal[5])
-                        slotsVal[7] = slotsVal[3]
-                        slots[7].setImageResource(slotsVal[7])
-                        slotsVal[4] = slotsVal[0]
-                        slots[4].setImageResource(slotsVal[4])
-                        slotsVal[0] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[1] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[2] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[3] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[6] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slots[0].setImageResource(slotsVal[0])
-                        slots[1].setImageResource(slotsVal[1])
-                        slots[2].setImageResource(slotsVal[2])
-                        slots[3].setImageResource(slotsVal[3])
-                        slots[6].setImageResource(slotsVal[6])
+                    if (!stoped.value) {
+                        if (toLeft) {
+                            slotsVal[8] = slotsVal[4]
+                            slots[8].setImageResource(slotsVal[8])
+                            slotsVal[5] = slotsVal[1]
+                            slots[5].setImageResource(slotsVal[5])
+                            slotsVal[7] = slotsVal[3]
+                            slots[7].setImageResource(slotsVal[7])
+                            slotsVal[4] = slotsVal[0]
+                            slots[4].setImageResource(slotsVal[4])
+                            slotsVal[0] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[1] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[2] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[3] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[6] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slots[0].setImageResource(slotsVal[0])
+                            slots[1].setImageResource(slotsVal[1])
+                            slots[2].setImageResource(slotsVal[2])
+                            slots[3].setImageResource(slotsVal[3])
+                            slots[6].setImageResource(slotsVal[6])
+                        } else {
+                            slotsVal[2] = slotsVal[4]
+                            slots[2].setImageResource(slotsVal[2])
+                            slotsVal[5] = slotsVal[7]
+                            slots[5].setImageResource(slotsVal[5])
+                            slotsVal[1] = slotsVal[3]
+                            slots[1].setImageResource(slotsVal[1])
+                            slotsVal[4] = slotsVal[6]
+                            slots[4].setImageResource(slotsVal[4])
+                            slotsVal[0] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[3] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[6] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[7] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slotsVal[8] = Random.nextInt(
+                                R.drawable.slots_01_image,
+                                R.drawable.slots_09_image + 1
+                            )
+                            slots[0].setImageResource(slotsVal[0])
+                            slots[3].setImageResource(slotsVal[3])
+                            slots[6].setImageResource(slotsVal[6])
+                            slots[7].setImageResource(slotsVal[7])
+                            slots[8].setImageResource(slotsVal[8])
+                        }
+                        toLeft = !toLeft
+                        delay(100)
                     }
-                    else {
-                        slotsVal[2] = slotsVal[4]
-                        slots[2].setImageResource(slotsVal[2])
-                        slotsVal[5] = slotsVal[7]
-                        slots[5].setImageResource(slotsVal[5])
-                        slotsVal[1] = slotsVal[3]
-                        slots[1].setImageResource(slotsVal[1])
-                        slotsVal[4] = slotsVal[6]
-                        slots[4].setImageResource(slotsVal[4])
-                        slotsVal[0] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[3] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[6] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[7] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slotsVal[8] = Random.nextInt(R.drawable.slots_01_image, R.drawable.slots_09_image + 1)
-                        slots[0].setImageResource(slotsVal[0])
-                        slots[3].setImageResource(slotsVal[3])
-                        slots[6].setImageResource(slotsVal[6])
-                        slots[7].setImageResource(slotsVal[7])
-                        slots[8].setImageResource(slotsVal[8])
-                    }
-                    toLeft = !toLeft
-                    delay(100)
                 }
                 var win = 0
                 for(slot in slotsVal.take(3)) {
@@ -224,6 +288,9 @@ class SlotsFragment(private val di: DI): Fragment() {
         }
         view.findViewById<AppCompatImageButton>(R.id.privacyButton).setOnClickListener {
             navigation.navigate(navigation.privacyDest)
+        }
+        view.findViewById<AppCompatImageButton>(R.id.pauseButton).setOnClickListener {
+            stoped.value = true
         }
     }
 }

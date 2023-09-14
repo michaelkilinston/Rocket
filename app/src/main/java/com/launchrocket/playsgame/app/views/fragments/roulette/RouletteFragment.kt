@@ -28,6 +28,7 @@ class RouletteFragment(private val di: DI): Fragment() {
     private val navigation: MainNavigation by di.instance()
     private val balanceRepo: BalanceRepo by di.instance()
     private val balance = MutableStateFlow(0)
+    private val stoped = MutableStateFlow(false)
     private var autospinMode = false
 
     override fun onCreateView(
@@ -72,15 +73,18 @@ class RouletteFragment(private val di: DI): Fragment() {
             it.isEnabled = false
             lifecycleScope.launch {
                 balance.value -= 100
+                stoped.value = false
                 var rotation = 10.0f
                 val rouletteElements = view.findViewById<AppCompatImageView>(R.id.rouletteElements)
                 repeat(((Random().nextDouble() * (1000.0 - 600.0)) + 600.0).toInt()) {
-                    rouletteElements.rotation += 1
-                    if(rouletteElements.rotation >= 360f) {
-                        rouletteElements.rotation = 0f
+                    if(!stoped.value) {
+                        rouletteElements.rotation += 1
+                        if (rouletteElements.rotation >= 360f) {
+                            rouletteElements.rotation = 0f
+                        }
+                        rotation = rouletteElements.rotation
+                        delay(5)
                     }
-                    rotation = rouletteElements.rotation
-                    delay(5)
                 }
                 while(!RouletteRotations.rotationToValue.keys.contains(rotation)) {
                     rouletteElements.rotation += 1
@@ -88,7 +92,9 @@ class RouletteFragment(private val di: DI): Fragment() {
                         rouletteElements.rotation = 0f
                     }
                     rotation = rouletteElements.rotation
-                    delay(25)
+                    if(!stoped.value) {
+                        delay(25)
+                    }
                 }
                 val win = RouletteRotations.rotationToValue[rotation]
                 if(win != null) {
@@ -125,6 +131,9 @@ class RouletteFragment(private val di: DI): Fragment() {
         }
         view.findViewById<AppCompatImageButton>(R.id.privacyButton).setOnClickListener {
             navigation.navigate(navigation.privacyDest)
+        }
+        view.findViewById<AppCompatImageButton>(R.id.pauseButton).setOnClickListener {
+            stoped.value = true
         }
     }
 }
